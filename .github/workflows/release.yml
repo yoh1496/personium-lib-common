@@ -47,9 +47,9 @@ jobs:
 
     - name: Commit and push
       run: |
-         git add pom.xml
-         git commit -m "Update to v${RELEASE_VERSION}"
-         git push origin master
+        git add pom.xml
+        git commit -m "Update to v${RELEASE_VERSION}"
+        git push origin master
 
     - name: Create Release Note
       run: awk '/##/{i++}i==1' CHANGELOG.md | tail +2 > ${{ github.workflow }}_CHANGELOG.md
@@ -72,6 +72,11 @@ jobs:
     - name: Delete Temporary Release Note
       run: rm ${{ github.workflow }}_CHANGELOG.md
 
+    - name: Prepare develop branch
+      run: |
+        git checkout develop
+        git rebase master
+
     - name: Set next -SNAPSHOT version, and get next version string.
       run: |
         mvn -B versions:set -DnextSnapshot && mvn -B versions:commit
@@ -79,8 +84,6 @@ jobs:
 
     - name: Update versions on develop branch
       run: |
-        git checkout develop
-        git rebase master
         git add pom.xml
         git commit -m "Update to v${NEXT_SNAPSHOT_VERSION}"
         git push origin develop
