@@ -307,7 +307,7 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-security-jose</artifactId>
-            <version>3.2.7</version>
+            <version>3.5.1</version>
         </dependency>
         <!-- For tests. -->
         <dependency>
